@@ -1,0 +1,31 @@
+<div class="container">
+    <form [formGroup]="filterForm" name="filterForm">
+        <div class="header">
+            <img class="header-image" src="../assets/logo.png">
+            <div class="input">
+                <label>Filter By Price</label>
+                <input type="number" formControlName="minControl" placeholder="Minimum">
+            </div>
+            <div class="input">
+                <input type="number" formControlName="maxControl" placeholder="Maximum">
+            </div>
+            <div class="input">
+                <button (click)="updateRange()">Filter</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="cards">
+        <div class="card" *ngFor="let item of items$">
+            <img class="image" src={{item.img}} />
+            <p class="name">{{ item.name }}</p>
+            <div class="footer">
+                <p class="brand">{{ item.brand }}</p>
+                <div class="price">
+                    <p>{{ item.price }}</p>
+                    <p class="msrp">{{ item.msrp }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

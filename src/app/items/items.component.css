@@ -1,0 +1,102 @@
+.container{
+    width: 70vw;
+    margin: 0 auto;
+}
+
+.header{
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 0px 30px 0px;
+}
+.header-image{
+    margin-right: 5px;
+}
+.input{
+    align-self: flex-end;
+    margin: 5px 5px 1px 5px;
+}
+input{
+    height: 50%;
+    border-color: #79b7e2;
+    border-style: solid;
+    border-width: 1px;
+    display: block;
+    height: 30px;
+    padding-left: 5px;
+    width: 175px
+}
+.row{
+    display: inline-block;
+}
+label{
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+    padding-bottom: 2px;
+}
+button{
+    background-color: #2877af;
+    color: white;
+    border: 0;
+    width: 65px;
+    margin: 0;
+    height: 35px;
+    transition: box-shadow 0.2s;
+}
+button:hover{
+    cursor: pointer;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    grid-gap: 30px;
+    font-family: 'Aleo', serif;
+}
+
+.card{
+    display: grid;
+}
+
+.footer{
+    align-self: end;
+}
+
+.brand{
+    font-size: 0.8rem;
+    color: gray;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.price{
+    background-color: #e0e0e0;
+    text-align: right;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 0.1;
+    padding: 2px 5px 2px 5px;
+}
+
+.msrp{
+    font-size: 0.6rem;
+    color: #6b6b6b;
+}
+
+/* disable spinbox on inputs */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+@media only screen and (max-width: 1050px) {
+    .container{
+        width: 90vw;
+    }
+}
+@media only screen and (max-width: 800px) {
+    .header-image{
+        margin-right: 800px;
+    }
+}
