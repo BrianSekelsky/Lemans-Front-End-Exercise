@@ -21,13 +21,20 @@ export class ItemsComponent  {
   min: number = 0;
   max: number = 10000;
 
+  ngOnInit() {
+
+    this.createList();
+
+  }
+
   updateRange(){
 
     var pass = true;
 
-    if(this.filterForm.value.minControl === null || this.filterForm.value.minControl === null){
-      alert("You must enter a number for both Maximum and Minimum");
-      pass = false;
+    if(this.filterForm.value.minControl === null && this.filterForm.value.maxControl === null){
+      this.filterForm.value.minControl = 0;
+      this.filterForm.value.maxControl = 10000;
+      pass = true;
     }
     else if(this.filterForm.value.minControl >= this.filterForm.value.maxControl){
       alert("Please enter a Minimum value which is smaller than the Maximum value");
@@ -37,6 +44,10 @@ export class ItemsComponent  {
       alert("Please don't use negative numbers");
       pass = false;
     }
+    else if(this.filterForm.value.minControl === null || this.filterForm.value.maxControl === null){
+      alert("You must enter a number for both Maximum and Minimum");
+      pass = false;
+    }
     if(pass){
 
       this.min = this.filterForm.value.minControl;
@@ -44,8 +55,6 @@ export class ItemsComponent  {
 
       this.createList();
     }
-    console.log("min: " +this.filterForm.value.minControl);
-    console.log("max: " +this.filterForm.value.maxControl);
   }
   
   createList(){
@@ -99,12 +108,5 @@ export class ItemsComponent  {
 
     });
   }
-
-  ngOnInit() {
-
-    this.createList();
-
-  }
-  
 
 }
