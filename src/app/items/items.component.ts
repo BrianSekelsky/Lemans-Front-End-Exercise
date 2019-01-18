@@ -29,11 +29,11 @@ export class ItemsComponent  {
       alert("You must enter a number for both Maximum and Minimum");
       pass = false;
     }
-    if(this.filterForm.value.minControl >= this.filterForm.value.maxControl){
+    else if(this.filterForm.value.minControl >= this.filterForm.value.maxControl){
       alert("Please enter a Minimum value which is smaller than the Maximum value");
       pass = false;
     }
-    if(this.filterForm.value.minControl < 0 || this.filterForm.value.maxControl < 0){
+    else if(this.filterForm.value.minControl < 0 || this.filterForm.value.maxControl < 0){
       alert("Please don't use negative numbers");
       pass = false;
     }
@@ -103,7 +103,6 @@ export class ItemsComponent  {
   ngOnInit() {
 
     this.createList();
-
 
   }
   
