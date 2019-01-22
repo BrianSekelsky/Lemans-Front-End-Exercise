@@ -8,10 +8,10 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: [ './items.component.css' ]
 })
 export class ItemsComponent  {
-
-  items$: Array<any>;
   
   constructor( private service: ItemsService,) { }
+
+  items$: Array<any>;
 
   filterForm = new FormGroup({
     minControl: new FormControl(),
@@ -19,7 +19,7 @@ export class ItemsComponent  {
   });
 
   min: number = 0;
-  max: number = 10000;
+  max: number = Number.MAX_SAFE_INTEGER;
 
   ngOnInit() {
 
@@ -27,9 +27,9 @@ export class ItemsComponent  {
 
   }
 
-  updateRange(){
+  filterList(){
 
-    var pass = true;
+    let pass: boolean = true;
 
     if(this.filterForm.value.minControl === null && this.filterForm.value.maxControl === null){
       this.filterForm.value.minControl = 0;
@@ -63,38 +63,22 @@ export class ItemsComponent  {
     this.service.getItems().subscribe(res => {
       
       this.items$ = res.result.hits;
-      var tempList = [];
+      let tempList:Array<any> = [];
 
       this.items$.forEach(element => {
-        var hit;
-        var correctUrl;
-
-        element.parts.forEach(function(p){
-          if(p.description.includes("RED")){
-            correctUrl = p.primaryMedia.url; //find first part with "RED" in description
-          }
-        })
+        let hit: Object;
+        let correctUrl: string = this.sortColor(element, "RED");
+        let longPrice: boolean;
         
-        if(this.min !== null && this.max !== null)
         if(element.partSummary.priceRanges.retail.start > this.min && element.partSummary.priceRanges.retail.end < this.max){
-          if(element.partSummary.priceRanges.retail.start === element.partSummary.priceRanges.retail.end){
-            hit = { id: element.publicId,
-              name: element.name,
-              img: "https://asset.lemansnet.com/"+ correctUrl +".png?x=176&y=176&b=&t=image/png",
-              brand: element.brand.name,
-              price: "$"+element.partSummary.priceRanges.retail.start,
-              msrp: "MSRP",
-            };
-          }
-          else{
-            hit = { id: element.publicId,
-              name: element.name,
-              img: "https://asset.lemansnet.com/"+ correctUrl +".png?x=176&y=176&b=&t=image/png",
-              brand: element.brand.name,
-              price: "$"+element.partSummary.priceRanges.retail.start + " - " + "$"+element.partSummary.priceRanges.retail.end,
-              msrp: "MSRP",
-            };
-          }
+          
+          if(element.partSummary.priceRanges.retail.start === element.partSummary.priceRanges.retail.end)
+            longPrice = true;
+          else
+            longPrice = false;
+
+          hit = this.createHit(element, correctUrl, longPrice);
+
           tempList.push(hit);
         }
       })
@@ -107,6 +91,34 @@ export class ItemsComponent  {
       this.items$ = tempList;
 
     });
+  }
+
+  sortColor(element, color) : string{
+    let url: string = "";
+    element.parts.forEach(function(p){
+      if(p.description.includes(color)){
+        url = p.primaryMedia.url;
+      }
+    })
+    return url;
+  }
+
+  createHit(element, correctUrl, longprice: boolean) : any {
+    
+    let hit = { id: element.publicId,
+      name: element.name,
+      img: "https://asset.lemansnet.com/"+ correctUrl +".png?x=176&y=176&b=&t=image/png",
+      brand: element.brand.name,
+      msrp: "MSRP",
+      price: '',
+    }
+
+    if(longprice)
+      hit.price = "$"+element.partSummary.priceRanges.retail.start + " - " + "$"+element.partSummary.priceRanges.retail.end;
+    else
+      hit.price = "$"+element.partSummary.priceRanges.retail.start;
+
+    return hit;
   }
 
 }
