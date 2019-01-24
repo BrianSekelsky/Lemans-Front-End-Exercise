@@ -32,9 +32,8 @@ export class ItemsComponent  {
     let pass: boolean = true;
 
     if(this.filterForm.value.minControl === null && this.filterForm.value.maxControl === null){
-      this.filterForm.value.minControl = 0;
-      this.filterForm.value.maxControl = 10000;
-      pass = true;
+      alert("You must enter a value for both filters");
+      pass = false;
     }
     else if(this.filterForm.value.minControl >= this.filterForm.value.maxControl){
       alert("Please enter a Minimum value which is smaller than the Maximum value");
