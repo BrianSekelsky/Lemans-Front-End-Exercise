@@ -94,9 +94,9 @@ export class ItemsComponent  {
 
   sortColor(element, color) : string{
     let url: string = "";
-    element.parts.forEach(function(p){
+    element.parts.some(function(p){
       if(p.description.includes(color)){
-        url = p.primaryMedia.url;
+        return url = p.primaryMedia.url;
       }
     })
     return url;
